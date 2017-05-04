@@ -131,7 +131,6 @@ function downloadCanvas() {
     link.href = document.getElementById('canvas').toDataURL();
     link.download = 'Kern-Me.png';
     for (var i = 0; i < moveIcons.length; i++) {
-        console.log(moveIcons[i]);
         moveIcons[i].scaleX = 1;
         moveIcons[i].scaleY = 1;
     }
