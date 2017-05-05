@@ -77,7 +77,7 @@ function init() {
                 document.getElementById('file').type = '';
                 document.getElementById('file').type = 'file';
 
-                $('#formOptions, #download').slideToggle();
+                $('#formOptions, #download').slideDown();
             }
         };
         reader.readAsDataURL(e.target.files[0]);
