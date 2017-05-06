@@ -99,6 +99,9 @@ input[type="file"] {
 }
 
 @media (max-width: 600px) {
+    html, body {
+        padding-top: 0px;
+    }
     .canvas-container {
         width: 300px !important;
         height: 300px !important;
