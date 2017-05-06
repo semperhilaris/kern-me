@@ -78,6 +78,9 @@ function init() {
                 document.getElementById('file').type = '';
                 document.getElementById('file').type = 'file';
 
+                $('html, body').animate({
+                    scrollTop: $("#canvas").offset().top
+                }, 1000);
                 $('#formOptions, #download').slideDown();
             }
         };
