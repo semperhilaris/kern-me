@@ -29,7 +29,8 @@ function init() {
                 originX: "center",
                 originY: "center",
                 hasBorders: false,
-                hasControls: false
+                hasControls: false,
+                padding: 20
             });
             moveIcons.push(img);
             canvas.add(img);
