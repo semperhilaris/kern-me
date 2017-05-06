@@ -79,7 +79,7 @@ function init() {
                 document.getElementById('file').type = 'file';
 
                 $('html, body').animate({
-                    scrollTop: $("#canvas").offset().top
+                    scrollTop: $("#canvas").offset().top - 20
                 }, 1000);
                 $('#formOptions, #download').slideDown();
             }
