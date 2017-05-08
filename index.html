@@ -39,7 +39,8 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
-    <script src="js/kernme.js?v=2"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+    <script src="js/kernme.js?v=3"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.min.css" />
@@ -76,19 +77,19 @@
                     <div class="form-group">
                         <label for="imagePositionX" class="col-sm-5 control-label">Bildposition (horizontal)</label>
                         <div class="col-sm-6">
-                            <input id="imagePositionX" data-slider-id='imageSize' type="text" data-slider-min="-300" data-slider-max="300" data-slider-step="1" data-slider-value="0" data-slider-tooltip-position="bottom" data-slider-tooltip="hide"/>
+                            <input id="imagePositionX" data-slider-id='imagePositionX' type="text" data-slider-min="-300" data-slider-max="300" data-slider-step="1" data-slider-value="0" data-slider-tooltip-position="bottom" data-slider-tooltip="hide"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="imagePositionY" class="col-sm-5 control-label">Bildposition (vertikal)</label>
                         <div class="col-sm-6">
-                            <input id="imagePositionY" data-slider-id='imageSize' type="text" data-slider-min="-300" data-slider-max="300" data-slider-step="1" data-slider-value="0" data-slider-tooltip-position="bottom" data-slider-tooltip="hide"/>
+                            <input id="imagePositionY" data-slider-id='imagePositionY' type="text" data-slider-min="-300" data-slider-max="300" data-slider-step="1" data-slider-value="0" data-slider-tooltip-position="bottom" data-slider-tooltip="hide"/>
                         </div>
                     </div>
                 </form>
                 <a id="download" href="#" class="btn btn-primary btn-lg btn-block" onclick="downloadCanvas()"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Herunterladen</a>
                 <div id="footer">
-                  &copy 2017 - Version: 1.1
+                  &copy; 2017 - Version: 1.2
                 </div>
             </div>
         </div>

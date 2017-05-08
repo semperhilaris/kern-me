@@ -87,7 +87,7 @@ label {
     text-transform: uppercase;
 }
 
-input[type="file"] {
+#file {
     display: none;
 }
 

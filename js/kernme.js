@@ -7,6 +7,8 @@ var moveIcons = [];
 function init() {
     canvas = new fabric.Canvas('canvas');
 
+    canvas.selection = false;
+
     fabric.Image.fromURL('images/background.png', function(img) {
         background = img.set({ originX: "center", originY: "center", selectable: false});
         canvas.centerObject(background);
@@ -38,6 +40,7 @@ function init() {
     });
 
     document.getElementById('file').addEventListener("change", function (e) {
+        $.LoadingOverlay("show");
         var reader = new FileReader();
         reader.onload = function (event) {
             canvas.remove(imgInstance);
@@ -78,10 +81,13 @@ function init() {
                 document.getElementById('file').type = '';
                 document.getElementById('file').type = 'file';
 
-                $('html, body').animate({
-                    scrollTop: $("#canvas").offset().top - 20
+                setTimeout(function(){
+                    $.LoadingOverlay("hide");
+                    $('html, body').animate({
+                        scrollTop: $("#canvas").offset().top - 20
+                    }, 1000);
+                    $('#formOptions, #download').slideDown();
                 }, 1000);
-                $('#formOptions, #download').slideDown();
             }
         };
         reader.readAsDataURL(e.target.files[0]);
@@ -98,9 +104,9 @@ function init() {
             return value + '%';
         }
     });
-    imageSizeSlider.on("slide", function(event) {
-        imgInstance.scaleX = event.value / 100;
-        imgInstance.scaleY = event.value / 100;
+    imageSizeSlider.on("change", function(event) {
+        imgInstance.scaleX = event.value.newValue / 100;
+        imgInstance.scaleY = event.value.newValue / 100;
         canvas.renderAll();
     });
 
@@ -109,8 +115,8 @@ function init() {
             return value + 'px';
         }
     });
-    imagePositionXSlider.on("slide", function(event) {
-        imgInstance.left = event.value + 300;
+    imagePositionXSlider.on("change", function(event) {
+        imgInstance.left = event.value.newValue + 300;
         canvas.renderAll();
     });
 
@@ -119,8 +125,8 @@ function init() {
             return value + 'px';
         }
     });
-    imagePositionYSlider.on("slide", function(event) {
-        imgInstance.top = event.value + 300;
+    imagePositionYSlider.on("change", function(event) {
+        imgInstance.top = event.value.newValue + 300;
         canvas.renderAll();
     });
 }
