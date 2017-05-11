@@ -1,6 +1,7 @@
 var canvas;
 var background;
 var polygon;
+var imgRotation;
 var imgInstance;
 var moveIcons = [];
 
@@ -40,57 +41,73 @@ function init() {
     });
 
     document.getElementById('file').addEventListener("change", function (e) {
-        $.LoadingOverlay("show");
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            canvas.remove(imgInstance);
-
-            var img = new Image();
-            img.src = event.target.result;
-            img.onload = function () {
-                polygon.fill = null;
-
-                imgInstance = new fabric.Image(img, {
-                    originX: "center",
-                    originY: "center",
-                    selectable: false
-                });
-                var filterGrayscale = new fabric.Image.filters.Grayscale();
-                var filterContrast = new fabric.Image.filters.Contrast({
-                    contrast: 255
-                });
-                var filterColorize = new fabric.Image.filters.Blend({
-                    color: '#c51b36',
-                    mode: 'add'
-                });
-                imgInstance.filters.push(filterGrayscale);
-                imgInstance.filters.push(filterContrast);
-                imgInstance.filters.push(filterColorize);
-                imgInstance.applyFilters(function () {
-                    canvas.add(imgInstance);
-                    canvas.centerObject(imgInstance);
-                    imgInstance.sendToBack();
-                    background.sendToBack();
-                });
-                imgInstance.clipTo = function(ctx) {
-                    ctx.save();
-                    ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-                    polygon.render(ctx);
-                    ctx.restore();
-                };
-                document.getElementById('file').type = '';
-                document.getElementById('file').type = 'file';
-
-                setTimeout(function(){
-                    $.LoadingOverlay("hide");
-                    $('html, body').animate({
-                        scrollTop: $("#canvas").offset().top - 20
-                    }, 1000);
-                    $('#formOptions, #download').slideDown();
-                }, 1000);
+        $(this).fileExif(function(exifObject) {
+            switch(exifObject.Orientation) {
+                case 3:
+                    imgRotation = 180;
+                    break;
+                case 6:
+                    imgRotation = 90;
+                    break;
+                case 8:
+                    imgRotation = -90;
+                    break;
+                default:
+                    imgRotation = 0;
             }
-        };
-        reader.readAsDataURL(e.target.files[0]);
+            $.LoadingOverlay("show");
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                canvas.remove(imgInstance);
+
+                var img = new Image();
+                img.src = event.target.result;
+                img.onload = function () {
+                    polygon.fill = null;
+
+                    imgInstance = new fabric.Image(img, {
+                        originX: "center",
+                        originY: "center",
+                        selectable: false
+                    });
+                    imgInstance.setAngle(imgRotation);
+                    var filterGrayscale = new fabric.Image.filters.Grayscale();
+                    var filterContrast = new fabric.Image.filters.Contrast({
+                        contrast: 255
+                    });
+                    var filterColorize = new fabric.Image.filters.Blend({
+                        color: '#c51b36',
+                        mode: 'add'
+                    });
+                    imgInstance.filters.push(filterGrayscale);
+                    imgInstance.filters.push(filterContrast);
+                    imgInstance.filters.push(filterColorize);
+                    imgInstance.applyFilters(function () {
+                        canvas.add(imgInstance);
+                        canvas.centerObject(imgInstance);
+                        imgInstance.sendToBack();
+                        background.sendToBack();
+                    });
+                    imgInstance.clipTo = function(ctx) {
+                        ctx.save();
+                        ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+                        polygon.render(ctx);
+                        ctx.restore();
+                    };
+                    document.getElementById('file').type = '';
+                    document.getElementById('file').type = 'file';
+
+                    setTimeout(function(){
+                        $.LoadingOverlay("hide");
+                        $('html, body').animate({
+                            scrollTop: $("#canvas").offset().top - 20
+                        }, 1000);
+                        $('#formOptions, #download').slideDown();
+                    }, 1000);
+                }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
     });
 
     canvas.on('object:moving', function (options) {
